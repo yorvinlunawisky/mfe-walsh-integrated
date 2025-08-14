@@ -39,11 +39,11 @@
           class="nav-item group flex items-center space-x-3 px-3 py-3 rounded-xl text-slate-600 hover:text-emerald-600 hover:bg-gradient-to-r hover:from-emerald-50 hover:to-teal-50 transition-all duration-200 relative overflow-hidden cursor-pointer border-l-4 border-transparent hover:border-l-emerald-500"
           [ngClass]="{ 'justify-center': isCollapsed && !isOpen }"
           [title]="(isCollapsed && !isOpen) ? route.title : ''"
-          (click)="route.isCollapsible ? toggleSection(route) : (route.routerLink ? navigateTo(route.routerLink) : null)">
+          (click)="route.isCollapsible ? toggleSection(route) : handleRouteNavigation(route)">
           
-          <!-- For routes with routerLink -->
+          <!-- For internal routes with routerLink -->
           <a 
-            *ngIf="route.routerLink && !route.isCollapsible"
+            *ngIf="route.routerLink && !route.isCollapsible && !route.isExternal"
             [routerLink]="route.routerLink"
             routerLinkActive="nav-active"
             [routerLinkActiveOptions]="route.routerLinkActiveOptions!"
@@ -55,6 +55,18 @@
               <span *ngIf="!isCollapsed || isOpen" class="font-medium">{{ route.label }}</span>
             </div>
           </a>
+
+          <!-- For external routes -->
+          <div 
+            *ngIf="route.isExternal && !route.isCollapsible"
+            class="w-full flex items-center space-x-3"
+            [ngClass]="{ 'justify-center': isCollapsed && !isOpen }">
+            
+            <div class="relative z-10 flex items-center space-x-3" [ngClass]="{ 'justify-center': isCollapsed && !isOpen }">
+              <i [class]="route.icon + ' text-lg group-hover:scale-110 transition-transform duration-200'"></i>
+              <span *ngIf="!isCollapsed || isOpen" class="font-medium">{{ route.label }}</span>
+            </div>
+          </div>
           
           <!-- For collapsible sections -->
           <div 
@@ -83,19 +95,35 @@
           *ngIf="route.children && route.isExpanded && (!isCollapsed || isOpen)"
           class="ml-2 mt-2 space-y-1 border-l-2 border-slate-200 pl-2">
           
-          <a 
-            *ngFor="let child of route.children"
-            [routerLink]="child.routerLink!"
-            routerLinkActive="nav-active"
-            [routerLinkActiveOptions]="child.routerLinkActiveOptions!"
-            class="nav-item group flex items-center space-x-2 px-2 py-2 rounded-lg text-slate-500 hover:text-emerald-600 hover:bg-gradient-to-r hover:from-emerald-50 hover:to-teal-50 transition-all duration-200 relative overflow-hidden text-sm w-full border-l-4 border-transparent hover:border-l-emerald-500"
-            [title]="child.title">
-            
-            <div class="relative z-10 flex items-center space-x-2 flex-1 min-w-0">
-              <i [class]="child.icon + ' text-sm group-hover:scale-110 transition-transform duration-200 flex-shrink-0'"></i>
-              <span class="font-medium truncate">{{ child.label }}</span>
+          <div *ngFor="let child of route.children">
+            <!-- Internal child routes -->
+            <a 
+              *ngIf="!child.isExternal && child.routerLink"
+              [routerLink]="child.routerLink!"
+              routerLinkActive="nav-active"
+              [routerLinkActiveOptions]="child.routerLinkActiveOptions!"
+              class="nav-item group flex items-center space-x-2 px-2 py-2 rounded-lg text-slate-500 hover:text-emerald-600 hover:bg-gradient-to-r hover:from-emerald-50 hover:to-teal-50 transition-all duration-200 relative overflow-hidden text-sm w-full border-l-4 border-transparent hover:border-l-emerald-500"
+              [title]="child.title">
+              
+              <div class="relative z-10 flex items-center space-x-2 flex-1 min-w-0">
+                <i [class]="child.icon + ' text-sm group-hover:scale-110 transition-transform duration-200 flex-shrink-0'"></i>
+                <span class="font-medium truncate">{{ child.label }}</span>
+              </div>
+            </a>
+
+            <!-- External child routes -->
+            <div 
+              *ngIf="child.isExternal"
+              (click)="handleRouteNavigation(child)"
+              class="nav-item group flex items-center space-x-2 px-2 py-2 rounded-lg text-slate-500 hover:text-emerald-600 hover:bg-gradient-to-r hover:from-emerald-50 hover:to-teal-50 transition-all duration-200 relative overflow-hidden text-sm w-full border-l-4 border-transparent hover:border-l-emerald-500 cursor-pointer"
+              [title]="child.title">
+              
+              <div class="relative z-10 flex items-center space-x-2 flex-1 min-w-0">
+                <i [class]="child.icon + ' text-sm group-hover:scale-110 transition-transform duration-200 flex-shrink-0'"></i>
+                <span class="font-medium truncate">{{ child.label }}</span>
+              </div>
             </div>
-          </a>
+          </div>
         </div>
         
       </div>

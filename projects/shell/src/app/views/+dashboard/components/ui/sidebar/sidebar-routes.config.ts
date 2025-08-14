@@ -7,6 +7,9 @@ export interface SidebarRoute {
   children?: SidebarRoute[];
   isCollapsible?: boolean;
   isExpanded?: boolean;
+  externalApp?: string;
+  externalRoute?: string;
+  isExternal?: boolean;
 }
 
 export const SIDEBAR_ROUTES: SidebarRoute[] = [
@@ -25,11 +28,12 @@ export const SIDEBAR_ROUTES: SidebarRoute[] = [
     label: 'Inspections'
   },
   {
-    routerLink: '/dashboard/follow-ups',
-    routerLinkActiveOptions: { exact: false },
     title: 'Follow-ups',
     icon: 'pi pi-refresh',
-    label: 'Follow-ups'
+    label: 'Follow-ups',
+    isExternal: true,
+    externalApp: 'juno-frontend',
+    externalRoute: 'followups'
   },
   {
     title: 'Reports',
@@ -39,25 +43,28 @@ export const SIDEBAR_ROUTES: SidebarRoute[] = [
     isExpanded: false,
     children: [
       {
-        routerLink: '/dashboard/reports/performance-inspection',
-        routerLinkActiveOptions: { exact: false },
         title: 'Performance - Inspection',
         icon: 'pi pi-chart-line',
-        label: 'Performance - Inspection'
+        label: 'Performance - Inspection',
+        isExternal: true,
+        externalApp: 'juno-frontend',
+        externalRoute: 'reports-performance-inspection'
       },
       {
-        routerLink: '/dashboard/reports/performance-evaluator',
-        routerLinkActiveOptions: { exact: false },
         title: 'Performance - Evaluator',
         icon: 'pi pi-user-edit',
-        label: 'Performance - Evaluator'
+        label: 'Performance - Evaluator',
+        isExternal: true,
+        externalApp: 'juno-frontend',
+        externalRoute: 'reports-performance-evaluator'
       },
       {
-        routerLink: '/dashboard/reports/performance-operator',
-        routerLinkActiveOptions: { exact: false },
         title: 'Performance - Operator',
         icon: 'pi pi-users',
-        label: 'Performance - Operator'
+        label: 'Performance - Operator',
+        isExternal: true,
+        externalApp: 'juno-frontend',
+        externalRoute: 'reports-performance-operator'
       }
     ]
   },
@@ -69,88 +76,100 @@ export const SIDEBAR_ROUTES: SidebarRoute[] = [
     isExpanded: false,
     children: [
       {
-        routerLink: '/dashboard/setup/accounts',
-        routerLinkActiveOptions: { exact: false },
         title: 'Accounts',
         icon: 'pi pi-user',
-        label: 'Accounts'
+        label: 'Accounts',
+        isExternal: true,
+        externalApp: 'juno-frontend',
+        externalRoute: 'setup-accounts'
       },
       {
-        routerLink: '/dashboard/setup/assignments',
-        routerLinkActiveOptions: { exact: false },
         title: 'Assignments',
         icon: 'pi pi-bookmark',
-        label: 'Assignments'
+        label: 'Assignments',
+        isExternal: true,
+        externalApp: 'juno-frontend',
+        externalRoute: 'setup-assignments'
       },
       {
-        routerLink: '/dashboard/setup/departments',
-        routerLinkActiveOptions: { exact: false },
         title: 'Departments',
         icon: 'pi pi-building',
-        label: 'Departments'
+        label: 'Departments',
+        isExternal: true,
+        externalApp: 'juno-frontend',
+        externalRoute: 'setup-departments'
       },
       {
-        routerLink: '/dashboard/setup/job-titles',
-        routerLinkActiveOptions: { exact: false },
         title: 'Job Titles',
         icon: 'pi pi-id-card',
-        label: 'Job Titles'
+        label: 'Job Titles',
+        isExternal: true,
+        externalApp: 'juno-frontend',
+        externalRoute: 'setup-job-titles'
       },
       {
-        routerLink: '/dashboard/setup/inspection-templates',
-        routerLinkActiveOptions: { exact: false },
         title: 'Inspection Templates',
         icon: 'pi pi-file-o',
-        label: 'Inspection Templates'
+        label: 'Inspection Templates',
+        isExternal: true,
+        externalApp: 'juno-frontend',
+        externalRoute: 'setup-inspection-templates'
       },
       {
-        routerLink: '/dashboard/setup/location-structure',
-        routerLinkActiveOptions: { exact: false },
         title: 'Location Structure',
         icon: 'pi pi-sitemap',
-        label: 'Location Structure'
+        label: 'Location Structure',
+        isExternal: true,
+        externalApp: 'juno-frontend',
+        externalRoute: 'setup-location-structure'
       },
       {
-        routerLink: '/dashboard/setup/location-model',
-        routerLinkActiveOptions: { exact: false },
         title: 'Location Model',
         icon: 'pi pi-map',
-        label: 'Location Model'
+        label: 'Location Model',
+        isExternal: true,
+        externalApp: 'juno-frontend',
+        externalRoute: 'setup-location-model'
       },
       {
-        routerLink: '/dashboard/setup/topics',
-        routerLinkActiveOptions: { exact: false },
         title: 'Topics',
         icon: 'pi pi-tags',
-        label: 'Topics'
+        label: 'Topics',
+        isExternal: true,
+        externalApp: 'juno-frontend',
+        externalRoute: 'setup-topics'
       },
       {
-        routerLink: '/dashboard/setup/predefined-notes',
-        routerLinkActiveOptions: { exact: false },
         title: 'Predefined Notes',
         icon: 'pi pi-file-edit',
-        label: 'Predefined Notes'
+        label: 'Predefined Notes',
+        isExternal: true,
+        externalApp: 'juno-frontend',
+        externalRoute: 'setup-predefined-notes'
       },
       {
-        routerLink: '/dashboard/setup/users',
-        routerLinkActiveOptions: { exact: false },
         title: 'Users',
         icon: 'pi pi-users',
-        label: 'Users'
+        label: 'Users',
+        isExternal: true,
+        externalApp: 'juno-frontend',
+        externalRoute: 'setup-users'
       },
       {
-        routerLink: '/dashboard/setup/response-options',
-        routerLinkActiveOptions: { exact: false },
         title: 'Response Options',
         icon: 'pi pi-list',
-        label: 'Response Options'
+        label: 'Response Options',
+        isExternal: true,
+        externalApp: 'juno-frontend',
+        externalRoute: 'setup-response-options'
       },
       {
-        routerLink: '/dashboard/setup/mmg-settings',
-        routerLinkActiveOptions: { exact: false },
         title: 'MMG Settings',
         icon: 'pi pi-sliders-h',
-        label: 'MMG Settings'
+        label: 'MMG Settings',
+        isExternal: true,
+        externalApp: 'juno-frontend',
+        externalRoute: 'setup-mmg-settings'
       }
     ]
   },

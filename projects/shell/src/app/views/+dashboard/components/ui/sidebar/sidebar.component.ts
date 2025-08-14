@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ThemeService, Theme } from '../../../../../core/services/theme.service';
 import { ModalService, ModalResult } from '../../../../../shared/services/modal.service';
+import { ExternalNavigationService } from '../../../../../core/services/external-navigation.service';
 import { Observable } from 'rxjs';
 import { SIDEBAR_ROUTES, SidebarRoute } from './sidebar-routes.config';
 
@@ -32,7 +33,8 @@ export class SidebarComponent implements OnInit {
   constructor(
     private router: Router, 
     private themeService: ThemeService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private externalNavigationService: ExternalNavigationService
   ) {
     this.currentTheme$ = this.themeService.currentTheme$;
   }
@@ -73,10 +75,29 @@ export class SidebarComponent implements OnInit {
   }
 
   /**
-   * Navigate to specific route
+   * Navigate to specific route or external app
    */
   navigateTo(route: string): void {
     this.router.navigate([route]);
+    // Close mobile sidebar after navigation
+    this.closeMobileSidebar();
+  }
+
+  /**
+   * Handle navigation for sidebar route (internal or external)
+   */
+  handleRouteNavigation(route: SidebarRoute): void {
+    if (route.isExternal && route.externalApp && route.externalRoute) {
+      // External navigation to legacy app
+      this.externalNavigationService.navigateToLegacyApp(
+        route.externalApp, 
+        route.externalRoute
+      );
+    } else if (route.routerLink) {
+      // Internal navigation
+      this.navigateTo(route.routerLink);
+    }
+    
     // Close mobile sidebar after navigation
     this.closeMobileSidebar();
   }
