@@ -1,0 +1,230 @@
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+// Card entrance animation
+.backdrop-blur-xl {
+  animation: slideUp 0.8s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Role card staggered animations
+.relative.group {
+  animation: fadeInScale 0.6s ease-out;
+  
+  &:nth-child(1) { animation-delay: 0.1s; }
+  &:nth-child(2) { animation-delay: 0.2s; }
+  &:nth-child(3) { animation-delay: 0.3s; }
+  &:nth-child(4) { animation-delay: 0.4s; }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+// Glassmorphism card styling
+.glass-card {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+// Enhanced role card hover effects
+.relative.group {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.1), transparent);
+    transition: left 0.6s ease;
+  }
+  
+  &:hover::before {
+    left: 100%;
+  }
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -12px rgba(16, 185, 129, 0.2);
+  }
+}
+
+// Icon container styling with Walsh branding
+.bg-gradient-to-r {
+  box-shadow: 0 8px 25px -8px rgba(16, 185, 129, 0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:hover {
+    box-shadow: 0 12px 35px -8px rgba(16, 185, 129, 0.6);
+    transform: scale(1.05);
+  }
+}
+
+// Enhanced button styling
+button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.4s ease;
+  }
+  
+  &:hover::before {
+    width: 300px;
+    height: 300px;
+  }
+  
+  &:hover {
+    transform: translateY(-2px);
+  }
+  
+  &:active {
+    transform: translateY(-1px) scale(0.98);
+  }
+  
+  // Specific styling for logout button
+  &.bg-gradient-to-r {
+    &:hover {
+      box-shadow: 0 10px 25px -5px rgba(239, 68, 68, 0.4);
+    }
+  }
+}
+
+// Enhanced glassmorphism effects
+.backdrop-blur-xl {
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.backdrop-blur-sm {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+// Gradient overlay effects
+.bg-gradient-to-r {
+  &.from-emerald-500 {
+    background: linear-gradient(90deg, #10b981, #14b8a6, #3b82f6);
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .backdrop-blur-xl {
+    padding: 1rem;
+    margin: 0.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .relative.group {
+    padding: 1rem;
+  }
+  
+  .w-12 {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  
+  .text-lg {
+    font-size: 1rem;
+  }
+  
+  .inline-flex img {
+    width: 120px;
+    height: auto;
+  }
+}
+
+// Loading state for role cards
+.role-card-loading {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+// Enhanced focus states for accessibility
+button:focus,
+.relative.group:focus {
+  outline: 2px solid #10b981;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+}
+
+button:focus-visible,
+.relative.group:focus-visible {
+  outline: 2px solid #10b981;
+  outline-offset: 2px;
+}
+
+// Print styles
+@media print {
+  .bg-gradient-to-br {
+    background: white !important;
+  }
+  
+  .shadow-xl,
+  .shadow-2xl {
+    box-shadow: none !important;
+  }
+}

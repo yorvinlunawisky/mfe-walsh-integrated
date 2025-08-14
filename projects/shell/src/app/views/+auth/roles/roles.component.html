@@ -1,0 +1,134 @@
+<div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
+  <div class="w-full max-w-4xl">
+    
+    <!-- Header Section -->
+    <div class="text-center mb-6">
+      <!-- Logo with consistent styling -->
+      <div class="inline-flex items-center justify-center">
+        <img 
+          ngSrc="https://junoqa.azurewebsites.net/assets/img/WALSH-logo.png" 
+          alt="Walsh Integrated Logo" 
+          width="160" 
+          height="176"
+          priority
+        />
+      </div>
+      <p class="text-slate-600 text-base">Choose your role to access the system</p>
+    </div>
+
+    <!-- Role Selection Card with glassmorphism -->
+    <div class="backdrop-blur-xl bg-white/80 border border-white/20 rounded-3xl shadow-2xl shadow-black/10 p-6 relative overflow-hidden mb-6">
+      
+      <!-- Decorative gradient overlay -->
+      <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-blue-500"></div>
+      
+      <!-- Card Header -->
+      <div class="mb-6">
+        <h2 class="text-xl md:text-2xl font-bold text-slate-800 mb-2">Select Your Role</h2>
+        <p class="text-slate-600">Choose your role to access the system</p>
+      </div>
+
+      <!-- Loading State -->
+      <div *ngIf="loading" class="text-center py-8">
+        <div class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-slate-500 bg-white transition ease-in-out duration-150">
+          <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          Loading roles...
+        </div>
+      </div>
+
+      <!-- Error State -->
+      <div *ngIf="error && !loading" class="text-center py-8">
+        <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+          <div class="flex items-center justify-center">
+            <i class="pi pi-exclamation-triangle text-red-500 text-lg mr-2"></i>
+            <p class="text-red-700 font-medium">{{ error }}</p>
+          </div>
+          <button 
+            (click)="loadRoles()" 
+            class="mt-3 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200"
+          >
+            <i class="pi pi-refresh mr-2"></i>
+            Try Again
+          </button>
+        </div>
+      </div>
+
+       <!-- Roles Grid -->
+      <div *ngIf="!loading && !error" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div 
+          *ngFor="let role of roles" 
+          (click)="onRoleSelect(role)"
+          class="relative group cursor-pointer bg-slate-50/80 hover:bg-white/60 border border-slate-200 hover:border-emerald-300 rounded-xl p-4 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+        >
+          <div class="text-center">
+            <!-- Role Icon -->
+            <div class="bg-gradient-to-r from-walsh-primary to-walsh-primary-dark rounded-full w-12 h-12 mx-auto flex items-center justify-center mb-3 group-hover:shadow-lg group-hover:shadow-emerald-500/25 transition-all duration-300">
+              <i [class]="getIconForRole(role.Name)" class="text-white text-lg"></i>
+            </div>
+            
+            <!-- Role Name -->
+            <h3 class="text-base font-semibold text-slate-800 mb-2">{{ role.Name }}</h3>
+            
+            <!-- Role Description -->
+            <p class="text-xs text-slate-600 leading-relaxed">{{ role.Description }}</p>
+          </div>
+          
+          <!-- Hover overlay -->
+          <div class="absolute inset-0 rounded-xl bg-gradient-to-r from-emerald-500/5 to-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div *ngIf="!loading && !error && roles.length === 0" class="text-center py-8">
+        <div class="bg-slate-50 border border-slate-200 rounded-lg p-6">
+          <i class="pi pi-info-circle text-slate-400 text-2xl mb-3"></i>
+          <p class="text-slate-600 font-medium mb-2">No roles available</p>
+          <p class="text-slate-500 text-sm">No roles are assigned to your account. Please contact your administrator.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="backdrop-blur-xl bg-white/80 border border-white/20 rounded-3xl shadow-2xl shadow-black/10 p-6 relative overflow-hidden">
+      
+      <!-- Decorative gradient overlay -->
+      <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-blue-500"></div>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <!-- Back to Accounts Button -->
+        <button
+          type="button"
+          (click)="onBackToAccounts()"
+          class="px-6 py-3 bg-slate-50/80 hover:bg-white/60 text-slate-700 font-medium rounded-xl border border-slate-200 transition-all duration-300 hover:border-slate-300 hover:shadow-md flex items-center justify-center hover:-translate-y-0.5"
+        >
+          <i class="pi pi-arrow-left mr-2 text-slate-500"></i>
+          Back to Accounts
+        </button>
+        
+        <!-- Logout Button -->
+        <button
+          type="button"
+          (click)="onLogout()"
+          class="px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-medium rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-red-500/25 flex items-center justify-center hover:-translate-y-0.5 relative group overflow-hidden"
+        >
+          <span class="relative z-10 flex items-center justify-center">
+            <i class="pi pi-sign-out mr-2"></i>
+            Logout
+          </span>
+          <div class="absolute inset-0 bg-gradient-to-r from-red-400 to-red-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center mt-6 space-y-1">
+      <p class="text-slate-500 text-sm">
+        Copyright © {{ currentYear }} <span class="font-semibold text-emerald-600">Walsh Integrated Inc.</span> All rights reserved
+      </p>
+    </div>
+    
+  </div>
+</div>

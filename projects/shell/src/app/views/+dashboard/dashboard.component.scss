@@ -1,0 +1,263 @@
+// Minimal custom styles - Tailwind handles most styling
+
+:host {
+  display: block;
+}
+
+// Dark theme styles
+:host-context(.dark-theme) {
+  // Welcome section dark styles
+  .backdrop-blur-xl {
+    @apply bg-slate-800/90 border-slate-700/50;
+  }
+  
+  // Text colors for dark mode
+  .text-slate-800 {
+    @apply text-slate-100;
+  }
+  
+  .text-slate-600 {
+    @apply text-slate-300;
+  }
+  
+
+  
+  // Background colors for activity items and quick actions
+  .bg-slate-50\/50 {
+    @apply bg-slate-700/50;
+  }
+  
+  .bg-slate-50 {
+    @apply bg-slate-700;
+  }
+  
+  // Gradient backgrounds for quick action buttons
+  .bg-gradient-to-r.from-emerald-50 {
+    @apply from-emerald-900/30 to-teal-900/30;
+  }
+  
+  .bg-gradient-to-r.from-amber-50 {
+    @apply from-amber-900/30 to-orange-900/30;
+  }
+  
+  .bg-gradient-to-r.from-blue-50 {
+    @apply from-blue-900/30 to-indigo-900/30;
+  }
+  
+  .bg-gradient-to-r.from-purple-50 {
+    @apply from-purple-900/30 to-pink-900/30;
+  }
+  
+  // Hover states for dark mode
+  .hover\:from-emerald-100 {
+    @apply hover:from-emerald-800/50 hover:to-teal-800/50;
+  }
+  
+  .hover\:from-amber-100 {
+    @apply hover:from-amber-800/50 hover:to-orange-800/50;
+  }
+  
+  .hover\:from-blue-100 {
+    @apply hover:from-blue-800/50 hover:to-indigo-800/50;
+  }
+  
+  .hover\:from-purple-100 {
+    @apply hover:from-purple-800/50 hover:to-pink-800/50;
+  }
+}
+
+// Custom animations
+@keyframes slideInLeft {
+  0% { 
+    transform: translateX(-100%); 
+    opacity: 0; 
+  }
+  100% { 
+    transform: translateX(0); 
+    opacity: 1; 
+  }
+}
+
+@keyframes slideOutLeft {
+  0% { 
+    transform: translateX(0); 
+    opacity: 1; 
+  }
+  100% { 
+    transform: translateX(-100%); 
+    opacity: 0; 
+  }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  0% { 
+    transform: scale(0.95); 
+    opacity: 0; 
+  }
+  100% { 
+    transform: scale(1); 
+    opacity: 1; 
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { 
+    opacity: 1; 
+  }
+  50% { 
+    opacity: 0.5; 
+  }
+}
+
+// Sidebar animations
+.sidebar-enter {
+  animation: slideInLeft 0.3s ease-out;
+}
+
+.sidebar-leave {
+  animation: slideOutLeft 0.3s ease-in;
+}
+
+// Custom glassmorphism effect
+.glass-effect {
+  backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+// Custom focus styles for better accessibility
+button:focus, input:focus, a:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+// Smooth transitions for all interactive elements
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+// Navigation item styles
+.nav-item {
+  position: relative;
+
+  &:hover {
+    transform: translateX(4px);
+  }
+
+  &.nav-active {
+    background: linear-gradient(to right, rgb(236, 253, 245), rgb(240, 253, 250));
+    color: rgb(5, 150, 105);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+
+    .pi {
+      color: rgb(5, 150, 105);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(to bottom, rgb(16, 185, 129), rgb(20, 184, 166));
+      border-radius: 0 2px 2px 0;
+    }
+  }
+}
+
+// Custom scrollbar
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(248, 250, 252, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.5);
+  border-radius: 3px;
+
+  &:hover {
+    background: rgba(148, 163, 184, 0.8);
+  }
+}
+
+// Notification badge animation
+.notification-badge {
+  animation: pulse 2s infinite;
+}
+
+// Profile dropdown animation
+.profile-dropdown-enter {
+  animation: scaleIn 0.2s ease-out;
+  transform-origin: top right;
+}
+
+// Mobile optimizations
+@media (max-width: 768px) {
+  .sidebar-mobile {
+    width: 280px !important;
+  }
+}
+
+// Dark mode support (if needed in future)
+@media (prefers-color-scheme: dark) {
+  // Add dark mode styles here if needed
+}
+
+// Print styles
+@media print {
+  .sidebar, .navbar {
+    display: none !important;
+  }
+  
+  .main-content {
+    margin-left: 0 !important;
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .glass-effect {
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 2px solid rgba(0, 0, 0, 0.3);
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// Focus visible for better keyboard navigation
+button:focus-visible, 
+a:focus-visible, 
+input:focus-visible {
+  outline: 2px solid rgb(16, 185, 129);
+  outline-offset: 2px;
+}
+
+// Loading skeleton animations (for future use)
+@keyframes shimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: calc(200px + 100%) 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+}

@@ -1,0 +1,173 @@
+// Modal Component Styles
+:host {
+  .modal-backdrop {
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-container {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  // Button hover effects
+  button {
+    &:not(:disabled) {
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  // Close button hover effect
+  .close-button {
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  // Icon background animations
+  .icon-container {
+    transition: all 0.2s ease-in-out;
+    
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  // Responsive adjustments
+  @media (max-width: 640px) {
+    .modal-container {
+      margin: 1rem;
+      max-height: calc(100vh - 2rem);
+      overflow-y: auto;
+    }
+  }
+}
+
+// Dark mode styles
+:host-context(.dark-theme) {
+  .modal-container {
+    @apply bg-gray-800 border-gray-700;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  }
+
+  // Header styles
+  h3 {
+    @apply text-gray-100;
+  }
+
+  p {
+    @apply text-gray-300;
+  }
+
+  // Close button
+  .close-button {
+    @apply text-gray-400 hover:text-gray-200;
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    &:focus {
+      @apply ring-gray-600;
+    }
+  }
+
+  // Icon backgrounds in dark mode
+  .icon-container {
+    &.bg-blue-100 {
+      @apply bg-blue-900 bg-opacity-30;
+    }
+
+    &.bg-emerald-100 {
+      @apply bg-emerald-900 bg-opacity-30;
+    }
+
+    &.bg-amber-100 {
+      @apply bg-amber-900 bg-opacity-30;
+    }
+
+    &.bg-red-100 {
+      @apply bg-red-900 bg-opacity-30;
+    }
+  }
+
+  // Button styles in dark mode
+  button {
+    // Primary button
+    &.btn-primary {
+      @apply bg-blue-600 hover:bg-blue-500 focus:ring-blue-400;
+    }
+
+    // Secondary button
+    &.btn-secondary {
+      @apply bg-gray-700 hover:bg-gray-600 text-gray-200 focus:ring-gray-500;
+    }
+
+    // Danger button
+    &.btn-danger {
+      @apply bg-red-600 hover:bg-red-500 focus:ring-red-400;
+    }
+
+    // Success button
+    &.btn-success {
+      @apply bg-emerald-600 hover:bg-emerald-500 focus:ring-emerald-400;
+    }
+
+    // Warning button
+    &.btn-warning {
+      @apply bg-amber-600 hover:bg-amber-500 focus:ring-amber-400;
+    }
+
+    &:not(:disabled) {
+      &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+    }
+  }
+}
+
+// Animation improvements
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes backdropFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// Focus management
+:host {
+  button:focus {
+    outline: none;
+    ring: 2px;
+    ring-offset: 2px;
+  }
+}
+
+:host-context(.dark-theme) {
+  button:focus {
+    ring-offset-color: theme('colors.gray.800');
+  }
+}

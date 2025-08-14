@@ -1,0 +1,11 @@
+<div *ngIf="appSwStateService.isOffline" class="app-offline" role="alert" aria-live="polite">
+  <div class="offline-content">
+    <i class="pi pi-wifi-slash" aria-hidden="true"></i>
+    <p class="offline-message">{{ appSwDataService.offlineStatusMessage }}</p>
+    <p class="offline-hint">Please check your internet connection to continue using the application.</p>
+  </div>
+</div>
+
+<main id="auth-main" class="auth-layout">
+  <router-outlet></router-outlet>
+</main>

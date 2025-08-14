@@ -1,0 +1,89 @@
+// Minimal custom styles - Tailwind handles most styling
+:host {
+  display: block;
+}
+
+// Dark theme styles (simplified)
+:host-context(.dark-theme) {
+  .backdrop-blur-xl {
+    @apply bg-slate-800/90 border-slate-700/50;
+  }
+  .text-slate-800 { @apply text-slate-100; }
+  .text-slate-600 { @apply text-slate-300; }
+  .text-slate-700 { @apply text-slate-200; }
+  .bg-white { @apply bg-slate-800; }
+  .border-slate-200 { @apply border-slate-600; }
+}
+
+// Custom animations (simplified)
+@keyframes slideInUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.animate-slide-up { animation: slideInUp 0.6s ease-out; }
+.animate-fade-in { animation: fadeIn 0.4s ease-out; }
+
+// Focus and transitions
+button:focus, input:focus, .p-dropdown:focus-within {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+* {
+  transition: all 0.3s ease;
+}
+
+// Custom PrimeNG Dropdown Styling (simplified)
+::ng-deep .custom-dropdown {
+  .p-dropdown {
+    width: 100%;
+    background: rgba(248, 250, 252, 0.8);
+    border: 1px solid rgb(226, 232, 240);
+    border-radius: 0.75rem;
+    min-height: 3.5rem;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.9);
+      border-color: rgb(16, 185, 129);
+    }
+
+    &:focus-within, &.p-focus {
+      outline: none;
+      border-color: rgb(16, 185, 129);
+      box-shadow: 0 0 0 2px rgb(16, 185, 129);
+    }
+
+    .p-dropdown-label {
+      padding: 1rem 1.25rem;
+      color: rgb(51, 65, 85);
+      font-weight: 500;
+
+      &.p-placeholder {
+        color: rgb(148, 163, 184);
+        font-weight: 400;
+      }
+    }
+
+    .p-dropdown-trigger {
+      width: 3rem;
+      color: rgb(16, 185, 129);
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .space-y-6 > * + * { margin-top: 1rem; }
+  .p-6 { padding: 1.25rem; }
+}
+
+@media (max-width: 640px) {
+  .space-y-6 > * + * { margin-top: 0.75rem; }
+  .p-6 { padding: 1rem; }
+}

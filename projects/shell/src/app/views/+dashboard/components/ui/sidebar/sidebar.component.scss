@@ -1,0 +1,188 @@
+// Minimal custom styles - Tailwind handles most styling
+
+:host {
+  display: block;
+  position: relative;
+  z-index: 50;
+}
+
+// Dark theme styles
+:host-context(.dark-theme) {
+  aside {
+    .backdrop-blur-xl {
+      @apply bg-gray-900/95 border-gray-700/30;
+    }
+    
+    .border-white\/20 {
+      @apply border-gray-700/30;
+    }
+    
+    .text-slate-600 {
+      @apply text-gray-300;
+    }
+    
+    .text-slate-700 {
+      @apply text-gray-200;
+    }
+    
+    .text-slate-500 {
+      @apply text-gray-400;
+    }
+    
+    .hover\:text-emerald-600:hover {
+      @apply text-emerald-400;
+    }
+    
+    .hover\:bg-emerald-50:hover {
+      @apply bg-emerald-900/30;
+    }
+    
+    .hover\:from-emerald-50:hover {
+      @apply from-emerald-900/30;
+    }
+    
+    .hover\:to-teal-50:hover {
+      @apply to-teal-900/30;
+    }
+    
+    .bg-gradient-to-r.from-slate-50.to-blue-50 {
+      @apply from-gray-800/50 to-gray-700/50 border-gray-600/50;
+    }
+    
+    .hover\:text-red-600:hover {
+      @apply text-red-400;
+    }
+    
+    .hover\:bg-red-50:hover {
+      @apply bg-red-900/30;
+    }
+    
+    .hover\:bg-slate-100\/50:hover {
+      @apply bg-gray-700/50;
+    }
+    
+    .text-slate-400 {
+      @apply text-gray-500;
+    }
+    
+    .hover\:text-slate-600:hover {
+      @apply text-gray-300;
+    }
+  }
+}
+
+// Custom animations
+@keyframes slideInLeft {
+  0% { 
+    transform: translateX(-100%); 
+    opacity: 0; 
+  }
+  100% { 
+    transform: translateX(0); 
+    opacity: 1; 
+  }
+}
+
+@keyframes slideOutLeft {
+  0% { 
+    transform: translateX(0); 
+    opacity: 1; 
+  }
+  100% { 
+    transform: translateX(-100%); 
+    opacity: 0; 
+  }
+}
+
+// Sidebar animations
+.sidebar-enter {
+  animation: slideInLeft 0.3s ease-out;
+}
+
+.sidebar-leave {
+  animation: slideOutLeft 0.3s ease-in;
+}
+
+// Navigation item styles
+.nav-item {
+  position: relative;
+
+  &:hover {
+    transform: translateX(4px);
+  }
+
+  &.nav-active {
+    background: linear-gradient(to right, rgb(236, 253, 245), rgb(240, 253, 250));
+    color: rgb(5, 150, 105);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+
+    .pi {
+      color: rgb(5, 150, 105);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(to bottom, rgb(16, 185, 129), rgb(20, 184, 166));
+      border-radius: 0 2px 2px 0;
+    }
+  }
+}
+
+// Custom focus styles for better accessibility
+button:focus, a:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+// Smooth transitions for all interactive elements
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+// Custom scrollbar for sidebar content
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(248, 250, 252, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.5);
+  border-radius: 3px;
+
+  &:hover {
+    background: rgba(148, 163, 184, 0.8);
+  }
+}
+
+// Mobile optimizations
+@media (max-width: 768px) {
+  .sidebar-mobile {
+    width: 280px !important;
+  }
+}
+
+// Focus visible for better keyboard navigation
+button:focus-visible, 
+a:focus-visible {
+  outline: 2px solid rgb(16, 185, 129);
+  outline-offset: 2px;
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

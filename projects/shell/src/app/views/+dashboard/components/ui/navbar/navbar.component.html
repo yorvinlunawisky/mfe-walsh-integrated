@@ -1,0 +1,106 @@
+<header class="sticky top-0 z-30 backdrop-blur-xl bg-white/90 border-b border-white/20 shadow">
+      <div class="flex items-center justify-between px-4 py-4">
+        
+        <!-- Left Section -->
+        <div class="flex items-center space-x-4">
+          <!-- Mobile Menu Button -->
+          <button 
+            *ngIf="!isEvaluator"
+            (click)="toggleMobileSidebar()"
+            class="md:hidden flex items-center justify-center w-10 h-10 text-slate-600 hover:text-emerald-600 hover:bg-emerald-50 rounded-xl transition-all duration-200">
+            <i class="pi pi-bars text-lg"></i>
+          </button>
+
+          <!-- Desktop Sidebar Toggle -->
+          <button 
+            *ngIf="sidebarCollapsed && !isEvaluator"
+            (click)="toggleSidebar()"
+            class="hidden md:flex items-center justify-center w-10 h-10 text-slate-600 hover:text-emerald-600 hover:bg-emerald-50 rounded-xl transition-all duration-200">
+            <i class="pi pi-angle-right text-lg"></i>
+          </button>
+
+          <!-- Breadcrumb -->
+          <nav class="hidden sm:flex items-center space-x-2 text-sm">
+            <span class="text-slate-500">Dashboard</span>
+            <i class="pi pi-angle-right text-xs text-slate-400"></i>
+            <span class="text-slate-700 font-medium">{{ currentSection }}</span>
+          </nav>
+        </div>
+
+        <!-- Right Section -->
+        <div class="flex items-center space-x-3">
+          
+          <!-- User Selection Display -->
+          <div class="hidden md:flex items-center space-x-4">
+            <!-- Account Display -->
+            <div *ngIf="selectedAccountName" class="flex items-center space-x-2 px-3 py-2 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-xl">
+              <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+              <div class="flex flex-col">
+                <span class="text-xs font-medium text-emerald-700 uppercase tracking-wide">Account</span>
+                <span class="text-sm font-semibold text-emerald-800 truncate max-w-32">{{ selectedAccountName }}</span>
+              </div>
+            </div>
+            
+            <!-- Role Display -->
+            <div *ngIf="selectedRoleName" class="flex items-center space-x-2 px-3 py-2 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl">
+              <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+              <div class="flex flex-col">
+                <span class="text-xs font-medium text-blue-700 uppercase tracking-wide">Role</span>
+                <span class="text-sm font-semibold text-blue-800 truncate max-w-28">{{ selectedRoleName }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mobile User Info Button -->
+          <button *ngIf="selectedAccountName || selectedRoleName" class="md:hidden flex items-center justify-center w-10 h-10 text-slate-600 hover:text-emerald-600 hover:bg-emerald-50 rounded-xl transition-all duration-200">
+            <i class="pi pi-user text-lg"></i>
+          </button>
+
+          <!-- Notifications
+          <button class="relative flex items-center justify-center w-10 h-10 text-slate-600 hover:text-emerald-600 hover:bg-emerald-50 rounded-xl transition-all duration-200">
+            <i class="pi pi-bell text-lg"></i>
+            <span class="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-red-500 to-pink-500 rounded-full flex items-center justify-center text-xs text-white font-bold">3</span>
+          </button> -->
+
+          <!-- Theme Toggle -->
+          <app-theme-toggle 
+            [size]="'medium'"
+            [variant]="'button'"
+            [showLabel]="false">
+          </app-theme-toggle>
+
+          <!-- Profile Dropdown Trigger -->
+          <div class="relative">
+            <button 
+              (click)="toggleProfileMenu()"
+              class="flex items-center space-x-2 p-2 hover:bg-slate-50 rounded-xl transition-all duration-200 group">
+              <div class="w-8 h-8 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full flex items-center justify-center">
+                <i class="pi pi-user text-white text-sm"></i>
+              </div>
+              <i class="pi pi-angle-down text-slate-400 group-hover:text-slate-600 transition-colors duration-200"></i>
+            </button>
+
+            <!-- Profile Dropdown -->
+            <div 
+              *ngIf="profileMenuOpen"
+              class="absolute right-0 top-full mt-2 w-48 backdrop-blur-xl bg-white/90 border border-white/20 rounded-xl shadow-2xl shadow-black/10 py-2 z-50">
+              <a href="#" class="flex items-center space-x-2 px-4 py-2 text-slate-600 hover:text-emerald-600 hover:bg-emerald-50 transition-all duration-200">
+                <i class="pi pi-user text-sm"></i>
+                <span>Profile</span>
+              </a>
+              <a href="#" class="flex items-center space-x-2 px-4 py-2 text-slate-600 hover:text-emerald-600 hover:bg-emerald-50 transition-all duration-200">
+                <i class="pi pi-cog text-sm"></i>
+                <span>Settings</span>
+              </a>
+              <div class="border-t border-white/20 my-2"></div>
+              <button 
+                (click)="logout()"
+                class="w-full flex items-center space-x-2 px-4 py-2 text-red-600 hover:bg-red-50 transition-all duration-200">
+                <i class="pi pi-sign-out text-sm"></i>
+                <span>Logout</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>

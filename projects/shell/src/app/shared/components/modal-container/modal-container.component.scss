@@ -1,0 +1,33 @@
+// Modal Container Component Styles
+:host {
+  // Ensure the container doesn't interfere with layout
+  display: contents;
+  
+  // Handle multiple modals stacking
+  app-modal {
+    &:nth-child(n+2) {
+      // Increase z-index for subsequent modals
+      ::ng-deep .modal-backdrop {
+        z-index: calc(50 + var(--modal-index, 0));
+      }
+    }
+  }
+}
+
+// Global styles for modal stacking
+:host ::ng-deep {
+  .modal-backdrop {
+    // Ensure proper stacking context
+    position: fixed;
+    
+    // Add slight blur effect for stacked modals
+    &:not(:last-child) {
+      backdrop-filter: blur(2px);
+    }
+  }
+  
+  // Adjust backdrop opacity for stacked modals
+  .modal-backdrop + .modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+}

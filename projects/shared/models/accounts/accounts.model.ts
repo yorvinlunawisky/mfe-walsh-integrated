@@ -1,0 +1,32 @@
+export interface Account {
+  AccountGroupId: number;
+  AccountGroupName: string;
+  Name: string;
+  LogoUrl?: string;
+  PrimaryContactFirstName: string;
+  PrimaryContactLastName: string;
+  Phone?: string;
+  Email: string;
+  Language: string;
+  TimeZone: string;
+  TimeZoneId: number;
+  ContractStartDate: string;
+  ContractEndDate: string;
+  AllowedEvaluators: number;
+  AllowedChecklists: number;
+  Autorenew: boolean;
+  SelfServe: boolean;
+  IndustryId: number;
+  IndustryName: string;
+  SubIndustryId: number;
+  SubIndustryName: string;
+  FollowUpDueDayRange: number;
+  IsFollowUpStatusResolved: boolean;
+  Id: number;
+  Status: string;
+  CreatedBy: string;
+  CreateTimestamp: string;
+  ModifiedBy: string;
+  ModifiedTimestamp: string;
+  DataStateFlag: string;
+}

@@ -1,0 +1,12 @@
+<!-- Modal Container - Renders all active modals -->
+<ng-container *ngFor="let modal of modals; trackBy: trackByModalId">
+  <app-modal
+    [visible]="modal.visible"
+    [config]="modal.config"
+    (visibleChange)="onVisibilityChange(modal.id, $event)"
+    (onConfirm)="onModalConfirm(modal.id)"
+    (onCancel)="onModalCancel(modal.id)"
+    (onClose)="onModalClose(modal.id)"
+    (onCustomAction)="onModalCustomAction(modal.id, $event)"
+  ></app-modal>
+</ng-container>

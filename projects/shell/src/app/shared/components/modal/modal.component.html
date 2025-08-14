@@ -1,0 +1,71 @@
+<!-- Modal Backdrop -->
+<div 
+  *ngIf="visible" 
+  class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50 modal-backdrop"
+  [@backdropAnimation]
+  (click)="handleBackdropClick()"
+>
+  <!-- Modal Container -->
+  <div 
+    class="relative w-full max-w-md mx-auto bg-white rounded-xl shadow-2xl transform transition-all modal-container"
+    [style.max-width]="config.maxWidth || '28rem'"
+    [style.width]="config.width || 'auto'"
+    [@modalAnimation]
+    (click)="stopPropagation($event)"
+  >
+    <!-- Close Button -->
+    <button 
+      *ngIf="config.showCloseButton !== false"
+      type="button"
+      class="absolute top-4 right-4 p-1 text-gray-400 hover:text-gray-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-300 rounded-full close-button"
+      (click)="handleClose()"
+      aria-label="Close modal"
+    >
+      <i class="pi pi-times text-lg"></i>
+    </button>
+
+    <!-- Modal Header -->
+    <div class="px-6 pt-6 pb-4">
+      <div class="flex items-start space-x-4">
+        <!-- Icon -->
+        <div class="flex-shrink-0">
+          <div class="w-10 h-10 rounded-full flex items-center justify-center icon-container" 
+               [ngClass]="{
+                 'bg-blue-100': config.type === 'info',
+                 'bg-emerald-100': config.type === 'success',
+                 'bg-amber-100': config.type === 'warning',
+                 'bg-red-100': config.type === 'error' || config.type === 'danger'
+               }">
+            <i class="pi text-xl" [ngClass]="[modalIcon, modalIconColor]"></i>
+          </div>
+        </div>
+        
+        <!-- Title and Description -->
+        <div class="flex-1 min-w-0">
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">
+            {{ config.title }}
+          </h3>
+          <p class="text-sm text-gray-600 leading-relaxed">
+            {{ config.description }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="px-6 pb-6">
+      <div class="flex flex-col sm:flex-row sm:justify-end space-y-2 sm:space-y-0 sm:space-x-3">
+        <button
+          *ngFor="let button of buttons; let i = index"
+          type="button"
+          [ngClass]="getButtonClasses(button)"
+          [disabled]="button.disabled"
+          (click)="handleButtonClick(button)"
+          class="w-full sm:w-auto min-w-[80px]"
+        >
+          {{ button.label }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

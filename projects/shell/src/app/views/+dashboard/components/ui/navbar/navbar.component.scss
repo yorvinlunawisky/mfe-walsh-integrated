@@ -1,0 +1,129 @@
+// Navbar sticky positioning for desktop
+:host {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+
+// Ensure the header element also maintains sticky behavior
+header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+
+// Desktop specific sticky behavior
+@media (min-width: 768px) {
+  :host {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+  }
+  
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+  }
+}
+
+// Dark theme styles
+:host-context(.dark-theme) {
+  header {
+    @apply bg-gray-900/95 border-gray-700/30;
+    
+    .text-slate-600 {
+      @apply text-gray-300;
+    }
+    
+    .text-slate-700 {
+      @apply text-gray-200;
+    }
+    
+    .text-slate-500 {
+      @apply text-gray-400;
+    }
+    
+    .text-slate-400 {
+      @apply text-gray-500;
+    }
+    
+    .text-slate-800 {
+      @apply text-gray-200;
+    }
+    
+    .placeholder-slate-400::placeholder {
+      @apply text-gray-500;
+    }
+    
+    .hover\:text-emerald-600:hover {
+      @apply text-emerald-400;
+    }
+    
+    .hover\:bg-emerald-50:hover {
+      @apply bg-emerald-900/30;
+    }
+    
+    .hover\:text-slate-600:hover {
+      @apply text-gray-300;
+    }
+    
+    .hover\:bg-slate-50:hover {
+      @apply bg-gray-700/50;
+    }
+    
+    .bg-slate-50\/80 {
+      @apply bg-gray-800/80 border-gray-600;
+    }
+    
+    .hover\:bg-white\/60:hover {
+      @apply bg-gray-700/60;
+    }
+    
+    .backdrop-blur-xl.bg-white\/90 {
+      @apply bg-gray-800/95;
+    }
+    
+    .border-white\/20 {
+      @apply border-gray-700/30;
+    }
+    
+    .text-red-600 {
+      @apply text-red-400;
+    }
+    
+    .hover\:bg-red-50:hover {
+      @apply bg-red-900/30;
+    }
+  }
+}
+
+// Smooth transitions for all interactive elements
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+// Custom focus styles for better accessibility
+button:focus, input:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+// Focus visible for better keyboard navigation
+button:focus-visible, 
+input:focus-visible {
+  outline: 2px solid rgb(16, 185, 129);
+  outline-offset: 2px;
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
