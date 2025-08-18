@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Roles, RolesByUser } from 'projects/shared/models/roles/roles.model';
 import { LoginToken } from 'projects/shared/models/auth/login/loginToken.model';
+import { LoggedUserDetails } from 'projects/shared/models/users/loggedUserDetails';
 import { environment } from 'projects/environments/environment';    
 
 
@@ -57,10 +58,8 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('user_id');
-    localStorage.removeItem('user_email');
-    localStorage.removeItem('token_expires');
+    localStorage.clear();
+
     this.router.navigate(['/auth/login']);
   }
   
@@ -74,6 +73,18 @@ export class AuthService {
   
   getUserEmail(): string | null {
     return localStorage.getItem('user_email');
+  }
+  
+  getUserName(): string | null {
+    return localStorage.getItem('user_name');
+  }
+  
+  getUserFirstName(): string | null {
+    return localStorage.getItem('userFirstName');
+  }
+  
+  getUserLastName(): string | null {
+    return localStorage.getItem('userLastName');
   }
 
   // Accounts
@@ -89,12 +100,20 @@ export class AuthService {
 
     const url = environment.apiBaseUrl + 'api/roles/GetByUserIdAccountId?userId=' + userId + '&accountId=' + accountId;
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + tokenString);
-    
-    console.log('AuthService - Making HTTP request to:', url);
-    console.log('AuthService - Headers:', headers.get('Authorization') ? 'Authorization header set' : 'No Authorization header');
+
     
     return this.http.get<RolesByUser[]>(url, {headers});
   }
+
+  // Users endpoint. As we implement the MFE in other places of the legacy app, we're going to pass this Users and other services to 
+  // their respective sections/apps.
+
+  getUserById(userId: string, tokenString: string): Observable<LoggedUserDetails>{
+    const url = environment.apiBaseUrl + 'api/UserAccount/GetByUserId?userId=' + userId;
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + tokenString);
+    return this.http.get<LoggedUserDetails>(url, {headers});
+  }
+
 
 }
   

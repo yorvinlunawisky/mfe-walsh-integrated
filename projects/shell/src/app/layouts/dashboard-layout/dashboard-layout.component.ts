@@ -26,8 +26,8 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
   
   // User data
   currentUser: User = {
-    name: 'John Doe',
-    email: 'john.doe@walsh.com'
+    name: '',
+    email: ''
   };
 
   private destroy$ = new Subject<void>();
@@ -118,6 +118,26 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
     if (savedSidebarState) {
       this.sidebarCollapsed = JSON.parse(savedSidebarState);
     }
+    
+    // Load current user data from AuthService
+    const firstName = this.authService.getUserFirstName();
+    const lastName = this.authService.getUserLastName();
+    const userEmail = this.authService.getUserEmail();
+    
+    // Create full name from first and last name
+    let fullName = 'User';
+    if (firstName && lastName) {
+      fullName = `${firstName} ${lastName}`;
+    } else if (firstName) {
+      fullName = firstName;
+    } else if (lastName) {
+      fullName = lastName;
+    }
+    
+    this.currentUser = {
+      name: fullName,
+      email: userEmail || 'user@walsh.com'
+    };
     
     // Check if user has Evaluator role
     const selectedRoleName = localStorage.getItem('selectedRoleName');

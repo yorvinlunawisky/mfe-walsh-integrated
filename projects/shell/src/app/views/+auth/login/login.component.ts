@@ -30,7 +30,20 @@ loginGroupForm = new FormGroup({
           localStorage.setItem('access_token', response.access_token);
           localStorage.setItem('user_id', response.UserId);
           localStorage.setItem('user_email', response.Email);
+          localStorage.setItem('user_name', response.userName);
           localStorage.setItem('token_expires', response.expires);
+          
+          // Fetch additional user details
+          this.authService.getUserById(response.UserId, response.access_token).subscribe({
+            next: (userDetails) => {
+              localStorage.setItem('userFirstName', userDetails.FirstName);
+              localStorage.setItem('userLastName', userDetails.LastName);
+              console.log('User details fetched and stored');
+            },
+            error: (error) => {
+              console.log('Error fetching user details:', error);
+            }
+          });
           
           console.log('Login successful, token stored');
         },

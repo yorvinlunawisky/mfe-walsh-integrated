@@ -17,12 +17,15 @@ export class NavbarComponent implements OnInit {
   @Input() sidebarOpen = false;
   @Input() isMobile = false;
   @Input() isEvaluator = false;
+  @Input() currentUser: { name: string; email: string; avatar?: string } | null = null;
+  @Input() profileMenuOpen = false;
   
   @Output() sidebarToggle = new EventEmitter<void>();
   @Output() mobileSidebarToggle = new EventEmitter<void>();
   @Output() userLogout = new EventEmitter<void>();
+  @Output() profileMenuToggle = new EventEmitter<void>();
   
-  profileMenuOpen = false;
+
   currentTheme$: Observable<Theme>;
   selectedAccountName: string = '';
   selectedRoleName: string = '';
@@ -91,7 +94,7 @@ export class NavbarComponent implements OnInit {
   }
 
   toggleProfileMenu(): void {
-    this.profileMenuOpen = !this.profileMenuOpen;
+    this.profileMenuToggle.emit();
   }
 
   toggleMobileSidebar(): void {

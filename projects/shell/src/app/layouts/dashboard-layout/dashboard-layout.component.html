@@ -25,8 +25,11 @@
       [sidebarOpen]="sidebarOpen"
       [isMobile]="isMobile"
       [isEvaluator]="isEvaluator"
+      [currentUser]="currentUser"
+      [profileMenuOpen]="profileMenuOpen"
       (sidebarToggle)="toggleSidebar()"
       (mobileSidebarToggle)="toggleMobileSidebar()"
+      (profileMenuToggle)="toggleProfileMenu()"
       (userLogout)="logout()">
     </app-navbar>
 

@@ -23,14 +23,14 @@ export class ExternalNavigationService {
         'setup-accounts': '/accounts',
         'setup-assignments': '/assignments',
         'setup-departments': '/departments',
-        'setup-job-titles': '/jobtitles',
-        'setup-inspection-templates': '/evaluationtypes',
-        'setup-location-structure': '/locations',
-        'setup-location-model': '/locationtypes',
+        'setup-job-titles': '/job-titles',
+        'setup-inspection-templates': '/inspection-templates',
+        'setup-location-structure': '/locations/location-structure',
+        'setup-location-model': '/location-types',
         'setup-topics': '/topics',
-        'setup-predefined-notes': '/notes',
+        'setup-predefined-notes': '/predefined-notes',
         'setup-users': '/users',
-        'setup-response-options': '/responsesets',
+        'setup-response-options': '/response-options',
         'setup-mmg-settings': '/settings'
       }
     }

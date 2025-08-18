@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import  { NgOptimizedImage } from '@angular/common';
 import { ModalService, ModalResult } from '../../shared/services/modal.service';
+import { AuthService } from '../+auth/auth.service';
 
 interface User {
   name: string;
@@ -36,8 +37,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   
   // Current user data
   currentUser: User = {
-    name: 'John Doe',
-    email: 'john.doe@walsh.com'
+    name: '',
+    email: ''
   };
 
   // Dashboard statistics
@@ -86,7 +87,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private timeInterval?: any;
 
-  constructor(private router: Router, private modalService: ModalService) {}
+  constructor(private router: Router, private modalService: ModalService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.initializeComponent();
@@ -126,13 +127,26 @@ export class DashboardComponent implements OnInit, OnDestroy {
   /**
    * Load user data
    */
-  private loadUserData(): void {
-    // In a real app, you would get this from a service
-    // this.userService.getCurrentUser()
-    //   .pipe(takeUntil(this.destroy$))
-    //   .subscribe(user => {
-    //     this.currentUser = user;
-    //   });
+  private loadUserData() {
+    // Load current user data from AuthService
+    const firstName = this.authService.getUserFirstName();
+    const lastName = this.authService.getUserLastName();
+    const userEmail = this.authService.getUserEmail();
+    
+    // Create full name from first and last name
+    let fullName = 'User';
+    if (firstName && lastName) {
+      fullName = `${firstName} ${lastName}`;
+    } else if (firstName) {
+      fullName = firstName;
+    } else if (lastName) {
+      fullName = lastName;
+    }
+    
+    this.currentUser = {
+      name: fullName,
+      email: userEmail || 'user@walsh.com'
+    };
   }
 
   /**
