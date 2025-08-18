@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-mobile-layout',
@@ -15,8 +15,8 @@ import { Router } from '@angular/router';
         <div class="flex justify-around items-center py-1">
           <!-- Dashboard -->
           <button 
-            (click)="navigateTo('/dashboard')"
-            [class]="getNavItemClass('/dashboard')"
+            (click)="navigateTo('dashboard')"
+            [class]="getNavItemClass('dashboard')"
             class="flex flex-col items-center justify-center p-2 rounded-lg transition-all duration-200 min-w-0 flex-1">
             <i class="pi pi-home text-base mb-0.5"></i>
             <span class="text-xs font-medium">Dashboard</span>
@@ -24,8 +24,8 @@ import { Router } from '@angular/router';
           
           <!-- Inspect Now -->
           <button 
-            (click)="navigateTo('/inspect')"
-            [class]="getNavItemClass('/inspect')"
+            (click)="navigateTo('inspect')"
+            [class]="getNavItemClass('inspect')"
             class="flex flex-col items-center justify-center p-2 rounded-lg transition-all duration-200 min-w-0 flex-1">
             <i class="pi pi-search text-base mb-0.5"></i>
             <span class="text-xs font-medium">Inspect Now</span>
@@ -33,8 +33,8 @@ import { Router } from '@angular/router';
           
           <!-- Follow-Up -->
           <button 
-            (click)="navigateTo('/follow-up')"
-            [class]="getNavItemClass('/follow-up')"
+            (click)="navigateTo('follow-up')"
+            [class]="getNavItemClass('follow-up')"
             class="flex flex-col items-center justify-center p-2 rounded-lg transition-all duration-200 min-w-0 flex-1">
             <i class="pi pi-clock text-base mb-0.5"></i>
             <span class="text-xs font-medium">Follow-Up</span>
@@ -42,8 +42,8 @@ import { Router } from '@angular/router';
           
           <!-- Support -->
           <button 
-            (click)="navigateTo('/support')"
-            [class]="getNavItemClass('/support')"
+            (click)="navigateTo('support')"
+            [class]="getNavItemClass('support')"
             class="flex flex-col items-center justify-center p-2 rounded-lg transition-all duration-200 min-w-0 flex-1">
             <i class="pi pi-question-circle text-base mb-0.5"></i>
             <span class="text-xs font-medium">Support</span>
@@ -76,42 +76,36 @@ import { Router } from '@angular/router';
 })
 export class MobileLayoutComponent {
   
-  constructor(private router: Router) {}
+  constructor(private router: Router, private route: ActivatedRoute) {}
   
   navigateTo(route: string): void {
-    // Check if we're running as a micro frontend
-    const currentUrl = window.location.href;
-    const isMicroFrontend = currentUrl.includes('/dashboard/inspections');
+    // Navigate relative to the current route context
+    const routePath = route.startsWith('/') ? route.substring(1) : route;
+    console.log('Current URL:', this.router.url);
+    console.log('Navigating to:', routePath);
+    console.log('Route snapshot:', this.route.snapshot);
     
-    if (isMicroFrontend) {
-      // When running as MFE, navigate relative to the current MFE context
-      const routePath = route.startsWith('/') ? route.substring(1) : route;
-      this.router.navigate([routePath]);
-    } else {
-      // When running standalone, navigate normally
-      const routePath = route.startsWith('/') ? route.substring(1) : route;
-      this.router.navigate([routePath]);
-    }
+    // Navigate relative to the current route (which should be the MFE root)
+    this.router.navigate([routePath], { relativeTo: this.route });
   }
   
   getNavItemClass(route: string): string {
     const currentRoute = this.router.url;
-    const routePath = route.startsWith('/') ? route.substring(1) : route;
     
     // Handle micro frontend URL structure
     // When running as MFE, URLs will be like /dashboard/inspections/dashboard
     // When running standalone, URLs will be like /dashboard
     let isActive = false;
     
-    if (routePath === 'dashboard') {
+    if (route === 'dashboard') {
       // Dashboard is active if URL ends with /dashboard or is root
       isActive = currentRoute === '/' || 
                  currentRoute.endsWith('/dashboard') || 
                  currentRoute === '/dashboard';
     } else {
       // For other routes, check if URL ends with the specific route
-      isActive = currentRoute.endsWith(`/${routePath}`) || 
-                 currentRoute === `/${routePath}`;
+      isActive = currentRoute.endsWith(`/${route}`) || 
+                 currentRoute === `/${route}`;
     }
     
     return isActive ? 'nav-item-active' : 'nav-item-inactive';

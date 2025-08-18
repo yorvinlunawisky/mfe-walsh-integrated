@@ -13,6 +13,7 @@ currentYear: number = new Date().getFullYear();
  email: string = 'brittanyb@walshintegrated.com';
   password: string = '';
   showPassword: boolean = false;
+  isLoading: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -23,7 +24,8 @@ loginGroupForm = new FormGroup({
   });
 
   onSubmit() {
-    if (this.loginGroupForm.valid) {  
+    if (this.loginGroupForm.valid) {
+      this.isLoading = true;
       this.authService.login(this.loginGroupForm.value.email ?? '', this.loginGroupForm.value.password ?? '').subscribe({
         next: (response) => {
           // Store the access token in localStorage
@@ -49,8 +51,10 @@ loginGroupForm = new FormGroup({
         },
         error: (error) => {
           console.log('Login error:', error);
+          this.isLoading = false;
         },
         complete: () => {
+          this.isLoading = false;
           this.router.navigate(['/auth/accounts']);
         }
       } )

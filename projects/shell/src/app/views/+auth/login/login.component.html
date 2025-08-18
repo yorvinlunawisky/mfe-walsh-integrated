@@ -83,12 +83,13 @@
         <!-- Sign In Button -->
         <button 
           type="submit"
-          class="w-full bg-gradient-to-r from-walsh-primary to-walsh-primary-dark hover:from-walsh-primary-dark hover:to-walsh-primary text-white font-semibold py-3 px-6 rounded-xl shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:shadow-emerald-500/30 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-all duration-300 text-base relative overflow-hidden group">
+          [disabled]="isLoading"
+          [class]="'w-full font-semibold py-3 px-6 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-all duration-300 text-base relative overflow-hidden group ' + (isLoading ? 'bg-slate-400 cursor-not-allowed' : 'bg-gradient-to-r from-walsh-primary to-walsh-primary-dark hover:from-walsh-primary-dark hover:to-walsh-primary text-white shadow-emerald-500/25 hover:shadow-xl hover:shadow-emerald-500/30 transform hover:-translate-y-0.5')">
           <span class="relative z-10 flex items-center justify-center">
-            <i class="pi pi-sign-in mr-2"></i>
-            Sign in
+            <i [class]="isLoading ? 'pi pi-spin pi-spinner mr-2' : 'pi pi-sign-in mr-2'"></i>
+            {{ isLoading ? 'Signing in...' : 'Sign in' }}
           </span>
-          <div class="absolute inset-0 bg-gradient-to-r from-emerald-400 to-teal-400 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+          <div *ngIf="!isLoading" class="absolute inset-0 bg-gradient-to-r from-emerald-400 to-teal-400 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
         </button>
         
       </form>
