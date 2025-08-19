@@ -98,9 +98,13 @@ export class RolesComponent implements OnInit {
 
   onRoleSelect(role: RolesByUser): void {
     this.selectedRole = role;
+    // Store in shell app format (maintain existing functionality)
     localStorage.setItem('selectedRole', JSON.stringify(role));
     localStorage.setItem('roleId', role.Id.toString());
     localStorage.setItem('selectedRoleName', role.Name);
+    
+    // Store in legacy app format for cross-app compatibility
+    localStorage.setItem('selectedRolesID', JSON.stringify(role.Id));
     
     // Redirect Evaluators to the inspections-mfe app with dashboard as default
     if (role.Name === 'Evaluator') {
@@ -116,8 +120,11 @@ export class RolesComponent implements OnInit {
 
   onLogout(): void {
     this.authService.logout();
+    // Clean up both shell and legacy format data
     localStorage.removeItem('selectedAccount');
     localStorage.removeItem('selectedRole');
+    localStorage.removeItem('selectedAccountID');  // Legacy format
+    localStorage.removeItem('selectedRolesID');    // Legacy format
     this.router.navigate(['/auth/login']);
   }
 }

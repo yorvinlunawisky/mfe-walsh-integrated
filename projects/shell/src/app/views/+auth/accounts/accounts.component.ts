@@ -63,12 +63,15 @@ export class AccountsComponent implements OnInit, OnDestroy {
 
   onAccountSelect(): void {
     if (this.selectedAccount) {
-      // Store the account ID in localStorage as requested
+      // Store in shell app format (maintain existing functionality)
       localStorage.setItem('accountId', this.selectedAccount.Id.toString());
-      // Store the account name for navbar display
       localStorage.setItem('selectedAccountName', this.selectedAccount.Name);
-      // Also store the full account object for reference
       localStorage.setItem('selectedAccount', JSON.stringify(this.selectedAccount));
+      
+      // Store in legacy app format for cross-app compatibility
+      localStorage.setItem('selectedAccountID', JSON.stringify(this.selectedAccount.Id));
+      // Note: selectedAccountName is already stored above in the correct format for both apps
+      
       this.router.navigate(['/auth/roles']);
     }
   }

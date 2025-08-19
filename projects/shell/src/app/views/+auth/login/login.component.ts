@@ -28,12 +28,31 @@ loginGroupForm = new FormGroup({
       this.isLoading = true;
       this.authService.login(this.loginGroupForm.value.email ?? '', this.loginGroupForm.value.password ?? '').subscribe({
         next: (response) => {
-          // Store the access token in localStorage
+          // Create legacy-compatible currentUser format for seamless navigation to legacy app
+          const legacyCurrentUser = {
+            access_token: response.access_token,
+            token_type: response.token_type,
+            expires_in: response.expires_in,
+            expires: response.expires,
+            issued: response.issued,
+            userName: response.userName,
+            UserId: response.UserId,
+            Email: response.Email,
+            // Add additional properties that might be needed by legacy app
+            '.issued': response.issued  // Legacy app might expect dot notation
+          };
+
+          // Store in legacy-compatible format for cross-app compatibility
+          localStorage.setItem('currentUser', JSON.stringify(legacyCurrentUser));
+          
+          // Continue storing individual properties for shell app compatibility
           localStorage.setItem('access_token', response.access_token);
           localStorage.setItem('user_id', response.UserId);
           localStorage.setItem('user_email', response.Email);
           localStorage.setItem('user_name', response.userName);
           localStorage.setItem('token_expires', response.expires);
+          // Set isLoggedIn flag for legacy app compatibility
+          localStorage.setItem('isLoggedIn', 'true');
           
           // Fetch additional user details
           this.authService.getUserById(response.UserId, response.access_token).subscribe({
@@ -47,7 +66,6 @@ loginGroupForm = new FormGroup({
             }
           });
           
-          console.log('Login successful, token stored');
         },
         error: (error) => {
           console.log('Login error:', error);

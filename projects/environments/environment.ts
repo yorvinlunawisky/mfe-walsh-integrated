@@ -14,6 +14,10 @@ export const environment = {
     tenantId: '1a862db4-06d6-4298-8474-60718e0a8dd3',
     policy: 'B2C_1_WalshQAAppAuth',
     policyReset: 'B2C_1_WalshQAReset',
-    clientId: '9914c9fc-d87f-4450-be0a-b9a0a65311b9'
+    clientId: '9914c9fc-d87f-4450-be0a-b9a0a65311b9',
+    // Legacy app URLs for cross-domain navigation
+    legacyAppConfig: {
+        baseUrl: 'https://junoqa.azurewebsites.net' // QA/Development legacy app URL
+    }
 };
 

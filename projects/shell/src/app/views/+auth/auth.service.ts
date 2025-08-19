@@ -39,8 +39,9 @@ export class AuthService {
   isUserAuthenticated(): boolean {
     const token = localStorage.getItem('access_token');
     const expires = localStorage.getItem('token_expires');
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
     
-    if (!token || !expires) {
+    if (!token || !expires || !isLoggedIn) {
       return false;
     }
     

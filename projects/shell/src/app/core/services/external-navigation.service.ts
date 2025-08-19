@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../../../../environments/environment';
 
 export interface ExternalAppConfig {
   baseUrl: string;
@@ -14,7 +15,7 @@ export class ExternalNavigationService {
   
   private readonly legacyApps: { [key: string]: ExternalAppConfig } = {
     'juno-frontend': {
-      baseUrl: 'https://junoqa.azurewebsites.net',
+      baseUrl: environment.legacyAppConfig.baseUrl, // Environment-based URL
       routes: {
         'followups': '/followups',
         'reports-performance-inspection': '/reports/performance-inspection', 
@@ -39,7 +40,7 @@ export class ExternalNavigationService {
   constructor() { }
 
   /**
-   * Navigate to an external legacy application
+   * Navigate to an external legacy application with cross-domain authentication
    * @param appName The name of the legacy app (e.g., 'juno-frontend')
    * @param routeKey The route key in the app's route configuration
    * @param openInNewTab Whether to open in a new tab (default: false)
@@ -58,7 +59,12 @@ export class ExternalNavigationService {
       return;
     }
 
-    const fullUrl = `${appConfig.baseUrl}${route}`;
+    // Build URL with authentication parameters for cross-domain authentication
+    const authParams = this.buildAuthUrlParams();
+    const separator = route.includes('?') ? '&' : '?';
+    const fullUrl = `${appConfig.baseUrl}${route}${authParams ? separator + authParams : ''}`;
+    
+    console.log('Navigating to legacy app with auth params:', fullUrl);
     
     if (openInNewTab) {
       window.open(fullUrl, '_blank', 'noopener,noreferrer');
@@ -66,6 +72,37 @@ export class ExternalNavigationService {
       // For same-tab navigation, preserve the current session
       window.location.href = fullUrl;
     }
+  }
+
+  /**
+   * Build authentication URL parameters for cross-domain authentication
+   * @returns URL-encoded authentication parameters
+   */
+  private buildAuthUrlParams(): string {
+    const authData = {
+      access_token: localStorage.getItem('access_token'),
+      user_id: localStorage.getItem('user_id'),
+      user_email: localStorage.getItem('user_email'),
+      user_name: localStorage.getItem('user_name'),
+      token_expires: localStorage.getItem('token_expires'),
+      isLoggedIn: localStorage.getItem('isLoggedIn'),
+      selectedAccountID: localStorage.getItem('selectedAccountID'),
+      selectedAccountName: localStorage.getItem('selectedAccountName'),
+      selectedRolesID: localStorage.getItem('selectedRolesID'),
+      selectedRoleName: localStorage.getItem('selectedRoleName'),
+      userFirstName: localStorage.getItem('userFirstName'),
+      userLastName: localStorage.getItem('userLastName')
+    };
+
+    // Only include non-null values
+    const params = new URLSearchParams();
+    Object.entries(authData).forEach(([key, value]) => {
+      if (value !== null && value !== undefined) {
+        params.append(`mfe_${key}`, encodeURIComponent(value));
+      }
+    });
+
+    return params.toString();
   }
 
   /**
